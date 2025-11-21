@@ -1,0 +1,34 @@
+const UserModel = require("../Models/user.model");
+
+exports.registerUser = async (req, res) => {
+    const { fullname: { firstname, lastname }, email, password } = req.body;
+
+    /* if already exist  */
+    const isUserExist = await UserModel.findOne({ email });
+
+    if (isUserExist) {
+        return res.status(400).json({ message: "User already exist" })
+    }
+
+    const hashPassword = await UserModel.hashPassword(password)
+
+    const user = await UserModel.create({
+        fullname: { firstname, lastname },
+        email,
+        password: hashPassword
+    });
+
+
+    const token = user.generateToken();
+    res.cookie("token", token)
+
+    res.status(201).json({
+        _id: user._id,
+        firstname: user.fullname.firstname,
+        lastname: user.fullname.lastname,
+        email: user.email,
+        token
+    });
+
+
+}
