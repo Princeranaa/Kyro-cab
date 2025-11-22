@@ -63,4 +63,8 @@ The request body should be in JSON format and include the following fields:
     > Note: Password should NOT be returned in API responses.
 - **token** (string): JWT authentication token.
 
+## `/api/auth/profile` Endpoint
 
+### Description
+
+Retrieves the profile information of the currently authenticated user.

@@ -33,18 +33,18 @@ exports.registerUser = async (req, res) => {
 
 }
 
-exports.loginUser = async (req,res)=>{
-    const {email, password} = req.body;
-    
-    const user = await UserModel.findOne({email});
+exports.loginUser = async (req, res) => {
+    const { email, password } = req.body;
 
-    if(!user){
-        return res.status(400).json({message:"User not found"});
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+        return res.status(400).json({ message: "User not found" });
     }
 
     const isPasswordMatched = await user.comparePassword(password);
-    if(!isPasswordMatched){
-        return res.status(401).json({message:"Invalid credentials"});
+    if (!isPasswordMatched) {
+        return res.status(401).json({ message: "Invalid credentials" });
     }
 
     const token = user.generateToken();
@@ -59,4 +59,18 @@ exports.loginUser = async (req,res)=>{
     })
 
 
+}
+
+exports.getUserProfile = async (req, res) => {
+      res.status(200).json(req.user);
+}
+
+exports.logoutUser = async (req, res) => {
+    try {
+        res.clearCookie("token");
+        res.status(200).json({ message: "User logged out successfully" });
+    } catch (error) {
+        console.error("Logout error:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
 }
