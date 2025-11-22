@@ -3,24 +3,67 @@ const Joi = require("joi");
 
 exports.registerSchema = Joi.object({
   fullname: Joi.object({
-    firstname: Joi.string().min(2).max(40)
-    .message("firstname must be between 3 characters long")
-    .required(),
-    lastname: Joi.string().min(2).max(40)
-    .message("lastname must be between 3 characters long")
-    .required(),
+    firstname: Joi.string()
+      .min(2)
+      .max(40)
+      .required()
+      .messages({
+        'string.empty': 'firstname is required',
+        'string.min': 'firstname must be at least 2 characters long',
+        'string.max': 'firstname cannot exceed 40 characters',
+        'any.required': 'firstname is required'
+      }),
+    
+    lastname: Joi.string()
+      .min(2)
+      .max(40)
+      .required()
+      .messages({
+        'string.empty': 'lastname is required',
+        'string.min': 'lastname must be at least 2 characters long',
+        'string.max': 'lastname cannot exceed 40 characters',
+        'any.required': 'lastname is required'
+      }),
   }).required(),
 
   email: Joi.string()
     .email({ tlds: { allow: false } })
-    .message("email is required")
-    .required(),
+    .required()
+    .messages({
+      'string.email': 'Please provide a valid email',
+      'string.empty': 'email is required',
+      'any.required': 'email is required'
+    }),
 
   password: Joi.string()
     .min(6)
     .max(30)
     .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$/)
-    .message("Password must include uppercase, lowercase & number")
-    .required(),
+    .required()
+    .messages({
+      'string.min': 'Password must be at least 6 characters long',
+      'string.max': 'Password cannot exceed 30 characters',
+      'string.pattern.base': 'Password must include uppercase, lowercase & number',
+      'string.empty': 'Password is required',
+      'any.required': 'Password is required'
+    }),
+});
+
+exports.loginSchema = Joi.object({
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required()
+    .messages({
+      'string.email': 'Please provide a valid email address',
+      'string.empty': 'Email is required',
+      'any.required': 'Email is required'
+    }),
+
+  password: Joi.string()
+    .required()
+    .messages({
+      'string.empty': 'Password is required',
+      'any.required': 'Password is required'
+    })
 });
 

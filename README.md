@@ -32,3 +32,35 @@ The request body should be in JSON format and include the following fields:
 - **token** (string): JWT authentication token.
 
 ## /api/auth/login Endpoint
+
+### Description
+
+Authenticates a user using their email and password, returning a JWT token upon successful login.
+
+### HTTP Method
+
+`POST`
+
+### Endpoint
+
+`/api/auth/login`
+
+### Request Body
+
+The request body should be in JSON format and include the following fields:
+
+ -email (string, required): User's email address (must be a valid email).
+ -password (string, required): User's password (minimum 6 characters).
+
+### Example Response
+
+- **user** (object):
+  - **fullname** (object):
+    - **firstname** (string, required): User's first name (minimum 3 characters).
+    - **lastname** (string, required): User's last name (minimum 3 characters).
+  - **email** (string, required): User's email address (must be a valid email).
+  - **password** (string, required): User's password (minimum 6 characters).  
+    > Note: Password should NOT be returned in API responses.
+- **token** (string): JWT authentication token.
+
+
