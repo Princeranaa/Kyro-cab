@@ -1,9 +1,19 @@
 import React from 'react'
 import kyroImg from '../assets/image3.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import axios from 'axios'
+import { UserDataContext } from '../context/UserContext';
+import { useContext } from 'react';
+import toast from 'react-hot-toast';
+
 
 function UserSignup() {
+    const navigate = useNavigate()
+
+    const { user, setUser } = useContext(UserDataContext);
+
+    console.log(user)
 
     const [formData, setFormData] = useState({
         firstname: "",
@@ -11,6 +21,7 @@ function UserSignup() {
         email: "",
         password: "",
     });
+
 
     //  Handle Input Change (Two-way binding)
     const handleChange = (e) => {
@@ -23,21 +34,50 @@ function UserSignup() {
     };
 
     //  Handle Submit (For Now: just console.log)
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log({
+        const newUser = {
             fullname: {
                 firstname: formData.firstname,
                 lastname: formData.lastname,
             },
             email: formData.email,
             password: formData.password,
-        });
+        };
 
-        // Reset Form (optional)
-        setFormData({ firstname: "", lastname: "", email: "", password: "" });
+        try {
+            const response = await axios.post(
+                import.meta.env.VITE_BASE_URL + "/users/register",
+                newUser
+            );
+
+            const data = response.data;
+            console.log(data)
+
+            // SUCCESS — store user globally
+            setUser(data.user);
+
+            toast.success("Account created successfully!");
+            navigate("/home");
+
+            // Reset frontend form ONLY after success
+            setFormData({
+                firstname: "",
+                lastname: "",
+                email: "",
+                password: "",
+            });
+
+        } catch (error) {
+            if (error.response?.data?.errors) {
+                toast.error(error.response.data.errors[0]);
+            } else {
+                toast.error("Something went wrong");
+            }
+        }
     };
+
 
 
     return (
