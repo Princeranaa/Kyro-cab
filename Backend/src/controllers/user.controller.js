@@ -23,14 +23,9 @@ exports.registerUser = async (req, res) => {
     res.cookie("token", token)
 
     res.status(201).json({
-        _id: user._id,
-        firstname: user.fullname.firstname,
-        lastname: user.fullname.lastname,
-        email: user.email,
-        token
+        token,
+        user
     });
-
-
 }
 
 exports.loginUser = async (req, res) => {
@@ -51,18 +46,15 @@ exports.loginUser = async (req, res) => {
     res.cookie("token", token)
 
     res.status(200).json({
-        _id: user._id,
-        firstname: user.fullname.firstname,
-        lastname: user.fullname.lastname,
-        email: user.email,
-        token
+        token,
+        user
     })
 
 
 }
 
 exports.getUserProfile = async (req, res) => {
-      res.status(200).json(req.user);
+    res.status(200).json(req.user);
 }
 
 exports.logoutUser = async (req, res) => {
