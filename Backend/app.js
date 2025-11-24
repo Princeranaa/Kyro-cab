@@ -5,7 +5,11 @@ const authUser = require("../Backend/src/routes/user.routes")
 const captainRoutes = require("../Backend/src/routes/captain.routes")
 const cookieParser = require("cookie-parser")
 
-app.use(cors());
+app.use(cors(
+    {
+        origin: "http://localhost:5173",
+        credentials: true
+    }));
 app.use(express.json());
 app.use(cookieParser());
 

@@ -31,7 +31,7 @@ exports.authMiddleware = async (req, res, next) => {
 }
 
 
-exports.captainMiddleware = async (req, res) => {
+exports.captainMiddleware = async (req, res,next) => {
     const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
 
     if (!token) {

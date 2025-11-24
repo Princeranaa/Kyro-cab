@@ -13,15 +13,12 @@ function UserSignup() {
 
     const { user, setUser } = useContext(UserDataContext);
 
-    console.log(user)
-
     const [formData, setFormData] = useState({
         firstname: "",
         lastname: "",
         email: "",
         password: "",
     });
-
 
     //  Handle Input Change (Two-way binding)
     const handleChange = (e) => {
@@ -49,7 +46,8 @@ function UserSignup() {
         try {
             const response = await axios.post(
                 import.meta.env.VITE_BASE_URL + "/users/register",
-                newUser
+                newUser,
+                {withCredentials:true}
             );
 
             const data = response.data;

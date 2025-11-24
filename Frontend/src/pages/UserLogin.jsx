@@ -1,32 +1,45 @@
-import React from 'react'
 import kyroImg from '../assets/image3.png';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, UNSAFE_WithComponentProps, useNavigate } from 'react-router-dom';
+import { useState, useContext } from 'react';
+import axios from 'axios';
+import { UserDataContext } from '../context/UserContext';
+import toast from 'react-hot-toast';
+
+
 function UserLogin() {
 
-
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
         email: "",
         password: "",
     });
 
-
-
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("Form submitted:", formData);
-    }
-
-
+    const { user, setUser } = useContext(UserDataContext);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        const userData = {
+            email: formData.email,
+            password: formData.password
+        }
+        const response = await axios.post(import.meta.env.VITE_BASE_URL + "/users/login", userData, {withCredentials:true});
+        const data = response.data;
+        console.log("userData====>>:", data);
+        setUser(data.user);
 
+        toast.success("Login successfully");
+        setFormData({
+            email: "",
+            password: "",
+        });
+        navigate("/home")
 
+    }
 
     return (
         <div className='p-8 h-screen flex flex-col justify-between'>

@@ -8,8 +8,8 @@ function UserContext({ children }) {
     const [user, setUser] = useState({
         email: "",
         fullname: {
-            firstName: "",
-            LastName: ""
+            firstname: "",
+            lastname: ""
         }
     })
 

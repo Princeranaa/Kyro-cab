@@ -1,18 +1,33 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import kyroImg from '../assets/image3.png';
-import { Link, Links } from 'react-router-dom';
+import { Link, Links, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import axios from 'axios';
+import { CaptainDataContext } from '../context/CaptainContext';
+import toast from 'react-hot-toast';
 
 function CaptainLogin() {
-
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
         email: "",
         password: "",
     });
 
-    const handleSubmit = (e) => {
+    const { captain, setCaptain } = useContext(CaptainDataContext);
+
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Form submitted:", formData);
+        const loginData = {
+            email: formData.email,
+            password: formData.password
+        }
+        const response = await axios.post(import.meta.env.VITE_BASE_URL + "/captains/login", loginData, { withCredentials: true })
+        const data = response.data;
+        setCaptain(data.captain);
+        toast.success("login succesfull");
+        navigate("/captain-home")
+        console.log("Form submitted login:", data);
     }
 
     const handleChange = (e) => {

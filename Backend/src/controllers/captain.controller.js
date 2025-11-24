@@ -34,6 +34,7 @@ exports.registerCaptian = async (req, res) => {
 
         // Generate token
         const token = newCaptain.generateToken();
+        res.cookie("token", token)
 
         // Send response
         res.status(201).json({
@@ -58,28 +59,28 @@ exports.registerCaptian = async (req, res) => {
 exports.loginCaptian = async (req, res) => {
     const { email, password } = req.body;
 
-    const user = await Captain.findOne({ email });
-    if (!user) {
+    const captain = await Captain.findOne({ email });
+    if (!captain) {
         return res.status(401).json({ message: "invalid email or password" });
     }
 
-    const isPasswordValid = await user.comparePassword(password);
+    const isPasswordValid = await captain.comparePassword(password);
 
     if (!isPasswordValid) {
         return res.status(400).json({ message: "Invalid password" });
     }
 
-    const token = user.generateToken();
+    const token = captain.generateToken();
     res.cookie("token", token)
     res.status(200).json({
         message: "Login successful",
-        user: {
-            id: user._id,
-            fullname: user.fullname,
-            email: user.email,
-            vehicle: user.vehicle,
-            capacity: user.capacity,
-            vehicleType: user.vehicleType,
+        captain: {
+            id: captain._id,
+            fullname: captain.fullname,
+            email: captain.email,
+            vehicle: captain.vehicle,
+            capacity: captain.capacity,
+            vehicleType: captain.vehicleType,
         },
         token
     })
@@ -97,5 +98,9 @@ exports.logoutcaptain = async (req, res) => {
 }
 
 exports.getCaptainProfile = async (req, res) => {
-      res.status(200).json(req.user);
+    console.log(req.body)
+    return res.status(200).json({
+        captain: req.captain,      // <-- IMPORTANT
+        success: true
+    });
 }
