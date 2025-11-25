@@ -47,11 +47,11 @@ function UserSignup() {
             const response = await axios.post(
                 import.meta.env.VITE_BASE_URL + "/users/register",
                 newUser,
-                {withCredentials:true}
+                { withCredentials: true }
             );
 
             const data = response.data;
-            console.log(data)
+            console.log("data====>", data)
 
             // SUCCESS — store user globally
             setUser(data.user);

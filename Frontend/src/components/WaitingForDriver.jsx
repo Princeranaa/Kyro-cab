@@ -2,7 +2,7 @@ function WaitingForDriver({ waitingForDriver }) {
     return (
         <div>
             < h5 onClick={() => { waitingForDriver(false) }} className='p-3 text-center w-[93%] absolute top-0' > <i className="text-3xl text-gray-600 ri-arrow-down-wide-line"></i></h5 >
-            
+
             <div className="flex items-center justify-between gap-2">
                 <img className='h-15' src="https://cn-geo1.uber.com/image-proc/crop/resizecrop/udam/format=auto/width=924/height=520/srcb64=aHR0cHM6Ly90Yi1zdGF0aWMudWJlci5jb20vcHJvZC91ZGFtLWFzc2V0cy81YjVlMzVmOC1hMTRlLTQxZmEtOWQ4MC1jMDIyZDIyMWMwMGYuanBn" alt="" />
                 <div className="text-right">
@@ -13,7 +13,7 @@ function WaitingForDriver({ waitingForDriver }) {
             </div>
 
             <div className="flex flex-col gap-2 items-center justify-between ">
-                <div className="w-full ">
+                <div className="w-full mt-5">
                     <div className="flex items-center gap-5 p-2 border-b-2">
                         <i className="ri-user-location-line"></i>
                         <div>

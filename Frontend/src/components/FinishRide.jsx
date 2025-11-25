@@ -1,13 +1,21 @@
-function ConfirmRide({ setVehiclePanleOpen, setConfirmRideVehicle, setVehicleFound }) {
+import { Link } from "react-router-dom"
+
+function FinishRide({ setFinishPanle }) {
+
     return (
         <div>
-            < h5 onClick={() => {
-                setConfirmRideVehicle(false)
-            }} className='p-3 text-center w-[93%] absolute top-0' > <i className="text-3xl text-gray-600 ri-arrow-down-wide-line"></i></h5 >
-            <h3 className='text-2xl font-semibold mb-5'>Confirm your ride</h3>
+            < h5 onClick={() => { setFinishPanle(false) }} className='p-3 text-center w-[93%] absolute top-0' > <i className="text-3xl text-gray-600 ri-arrow-down-wide-line"></i></h5 >
+            <h3 className='text-2xl font-semibold mb-5'>Finish this Ride</h3>
+
+            <div className="flex items-center justify-between p-3 bg-gray-400 rounded-xl mt-4">
+                <div className="flex items-center gap-3 ">
+                    <img className='h-15 w-15 object-cover rounded-full ' src="https://images.unsplash.com/photo-1597586124394-fbd6ef244026?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
+                    <h2 className="text-lg font-medium">Prince rana</h2>
+                </div>
+                <h5 className="font-semibold text-lg">2.2 KM</h5>
+            </div>
 
             <div className="flex flex-col gap-2 items-center justify-between ">
-                <img className='h-20' src="https://cn-geo1.uber.com/image-proc/crop/resizecrop/udam/format=auto/width=924/height=520/srcb64=aHR0cHM6Ly90Yi1zdGF0aWMudWJlci5jb20vcHJvZC91ZGFtLWFzc2V0cy81YjVlMzVmOC1hMTRlLTQxZmEtOWQ4MC1jMDIyZDIyMWMwMGYuanBn" alt="" />
                 <div className="w-full ">
                     <div className="flex items-center gap-5 p-2 border-b-2">
                         <i className="ri-user-location-line"></i>
@@ -33,14 +41,21 @@ function ConfirmRide({ setVehiclePanleOpen, setConfirmRideVehicle, setVehicleFou
                         </div>
                     </div>
                 </div>
-                <button onClick={() => {
-                    setVehicleFound(true)
-                    setConfirmRideVehicle(false)
-                }} className="w-full bg-green-600 mt-5 p-2 text-center text-white font-semibold rounded-lg">Confirm Ride</button>
+
+                <div className="mt-6 w-full">
+
+                    <Link
+                        to="/captain-riding"
+                        className="w-full flex justify-center bg-green-600 p-3 text-lg text-white font-semibold rounded-lg"
+                    >
+                        Finish Ride
+                    </Link>
+                    <p></p>
+                </div>
             </div>
 
         </div>
     )
 }
 
-export default ConfirmRide
+export default FinishRide
