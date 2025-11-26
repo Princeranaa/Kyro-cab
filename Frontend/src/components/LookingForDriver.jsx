@@ -1,4 +1,4 @@
-function LookingForDriver({ setVehicleFound }) {
+function LookingForDriver({ setVehicleFound, createRide, fare, vehicleType, pickup, destination }) {
     return (
         <div>
             < h5 onClick={() => { setVehicleFound(false) }} className='p-3 text-center w-[93%] absolute top-0' > <i className="text-3xl text-gray-600 ri-arrow-down-wide-line"></i></h5 >
@@ -11,7 +11,7 @@ function LookingForDriver({ setVehicleFound }) {
                         <i className="ri-user-location-line"></i>
                         <div>
                             <h3 className="text-lg font-medium">562/11-A</h3>
-                            <p className="text-sm -mt-1 text-gray-500">Kankirya talav ahmedabad</p>
+                            <p className="text-sm -mt-1 text-gray-500">{pickup}</p>
                         </div>
                     </div>
 
@@ -19,14 +19,14 @@ function LookingForDriver({ setVehicleFound }) {
                         <i className="text-lg ri-map-pin-fill"></i>
                         <div>
                             <h3 className="text-lg font-medium">562/11-A</h3>
-                            <p className="text-sm -mt-1 text-gray-500">Kankirya talav ahmedabad</p>
+                            <p className="text-sm -mt-1 text-gray-500">{destination}</p>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-5 p-2 ">
                         <i className="ri-currency-line"></i>
                         <div>
-                            <h3 className="text-lg font-medium">₹ 199.0</h3>
+                            <h3 className="text-lg font-medium">₹ {fare[vehicleType]}</h3>
                             <p className="text-sm -mt-1 text-gray-500">Cash</p>
                         </div>
                     </div>

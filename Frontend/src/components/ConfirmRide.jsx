@@ -1,4 +1,4 @@
-function ConfirmRide({ setVehiclePanleOpen, setConfirmRideVehicle, setVehicleFound }) {
+function ConfirmRide({ setVehiclePanleOpen, setConfirmRideVehicle, setVehicleFound, createRide, pickup, destination, vehicleType, fare }) {
     return (
         <div>
             < h5 onClick={() => {
@@ -12,8 +12,8 @@ function ConfirmRide({ setVehiclePanleOpen, setConfirmRideVehicle, setVehicleFou
                     <div className="flex items-center gap-5 p-2 border-b-2">
                         <i className="ri-user-location-line"></i>
                         <div>
-                            <h3 className="text-lg font-medium">562/11-A</h3>
-                            <p className="text-sm -mt-1 text-gray-500">Kankirya talav ahmedabad</p>
+                            <h3 className="text-lg font-medium">                                                                                                                                                                                    562/11-A</h3>
+                            <p className="text-sm -mt-1 text-gray-500">{pickup}</p>
                         </div>
                     </div>
 
@@ -21,14 +21,14 @@ function ConfirmRide({ setVehiclePanleOpen, setConfirmRideVehicle, setVehicleFou
                         <i className="text-lg ri-map-pin-fill"></i>
                         <div>
                             <h3 className="text-lg font-medium">562/11-A</h3>
-                            <p className="text-sm -mt-1 text-gray-500">Kankirya talav ahmedabad</p>
+                            <p className="text-sm -mt-1 text-gray-500">{destination}</p>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-5 p-2 ">
                         <i className="ri-currency-line"></i>
                         <div>
-                            <h3 className="text-lg font-medium">₹ 199.0</h3>
+                            <h3 className="text-lg font-medium">₹ {fare[vehicleType]}</h3>
                             <p className="text-sm -mt-1 text-gray-500">Cash</p>
                         </div>
                     </div>
@@ -36,6 +36,7 @@ function ConfirmRide({ setVehiclePanleOpen, setConfirmRideVehicle, setVehicleFou
                 <button onClick={() => {
                     setVehicleFound(true)
                     setConfirmRideVehicle(false)
+                    createRide()
                 }} className="w-full bg-green-600 mt-5 p-2 text-center text-white font-semibold rounded-lg">Confirm Ride</button>
             </div>
 
