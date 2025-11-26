@@ -1,5 +1,5 @@
 import kyroImg from '../assets/image3.png';
-import { useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useGSAP } from "@gsap/react"
 import gsap from 'gsap';
 import axios from 'axios';
@@ -9,6 +9,8 @@ import VehicalePanel from '../components/VehicalePanel';
 import ConfirmRide from '../components/ConfirmRide';
 import LookingForDriver from '../components/LookingForDriver';
 import WaitingForDriver from '../components/WaitingForDriver';
+import UserContext, { UserDataContext } from '../context/UserContext';
+import { SocketContext } from '../context/SocketContext';
 
 
 function Home() {
@@ -26,7 +28,7 @@ function Home() {
     const [vehicleType, setVehicleType] = useState(null)
     const [fare, setFare] = useState({})
 
-
+    /* ref names */
     const panleRef = useRef(null)
     const panleCloseRef = useRef(null)
     const vehiclePanleRef = useRef(null);
@@ -38,6 +40,18 @@ function Home() {
         e.preventDefault();
         console.log("data submited")
     }
+
+    /* sockets */
+    const { user } = useContext(UserDataContext)
+    const { socket } = useContext(SocketContext)
+
+    useEffect(() => {
+        socket.emit("join", { userType: "user", userId: user._id })
+    }, [user])
+
+
+
+
 
     const handlePickupChange = async (e) => {
         setPickup(e.target.value)

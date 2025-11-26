@@ -6,16 +6,22 @@ import { BrowserRouter } from 'react-router-dom'
 import UserContext from './context/UserContext.jsx'
 import CaptainContext from './context/CaptainContext.jsx'
 import { Toaster } from 'react-hot-toast'
+import SocketProvider from './context/SocketContext.jsx'
+
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+
+  <>
     <Toaster position="top-right" />
     <CaptainContext>
       <UserContext>
         <BrowserRouter>
-          <App />
+          <SocketProvider>
+            <App />
+          </SocketProvider>
         </BrowserRouter>
       </UserContext>
     </CaptainContext>
-  </StrictMode>,
+
+  </>
 )

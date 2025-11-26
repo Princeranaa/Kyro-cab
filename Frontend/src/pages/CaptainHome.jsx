@@ -2,10 +2,12 @@ import { Link } from "react-router-dom";
 import kyroImg from '../assets/image3.png';
 import CaptainDetails from "../components/CaptainDetails";
 import RidePopup from "../components/RidePopup";
-import { useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react"
 import gsap from 'gsap';
 import ConfirmRidePopup from "../components/ConfirmRidePopup";
+import { SocketContext } from "../context/SocketContext";
+import { CaptainDataContext } from "../context/CaptainContext";
 
 
 
@@ -19,6 +21,13 @@ function CaptainHome() {
     const confirmRidePopupPanleRef = useRef(null)
 
 
+    const { socket } = useContext(SocketContext)
+    const { captain } = useContext(CaptainDataContext)
+
+
+    useEffect(()=>{
+        socket.emit("join", { userType: "captain", userId: captain._id })
+    },[captain])
 
 
 
@@ -29,12 +38,15 @@ function CaptainHome() {
             transform: ridePopupPanle ? "translate(0)" : "translateY(100%)"
         })
     }, [ridePopupPanle])
-   
+
     useGSAP(() => {
         gsap.to(confirmRidePopupPanleRef.current, {
             transform: confirmRidePopupPanle ? "translate(0)" : "translateY(100%)"
         })
     }, [confirmRidePopupPanle])
+
+
+
 
 
 
@@ -60,7 +72,7 @@ function CaptainHome() {
             </div>
 
             <div ref={confirmRidePopupPanleRef} className='fixed w-full h-screen z-10 bg-white bottom-0 translate-y-full py-10 px-3 pt-12'>
-                <ConfirmRidePopup setConfirmRidePopupPanle={setConfirmRidePopupPanle} setRidePopupPanle={setRidePopupPanle}  />
+                <ConfirmRidePopup setConfirmRidePopupPanle={setConfirmRidePopupPanle} setRidePopupPanle={setRidePopupPanle} />
             </div>
 
         </div>
