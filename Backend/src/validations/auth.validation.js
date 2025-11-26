@@ -115,3 +115,16 @@ exports.loginCaptainSchema = Joi.object({
   })
 });
 
+exports.getCoordinatesSchema = Joi.object({
+  address: Joi.string().trim().min(3).required().messages({
+    "string.base": "Address must be text",
+    "string.empty": "Address is required",
+    "string.min": "Address must be at least 3 characters",
+    "any.required": "Address is required"
+  })
+});
+
+exports.distanceMatrixSchema = Joi.object({
+  origin: Joi.string().trim().min(3).required(),
+  destination: Joi.string().trim().min(3).required()
+});
