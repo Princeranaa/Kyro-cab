@@ -27,6 +27,8 @@ function Home() {
     const [creating, setCreating] = useState(false);
     const [vehicleType, setVehicleType] = useState(null)
     const [fare, setFare] = useState({})
+    const [ride,setRide] = useState()
+
 
     /* ref names */
     const panleRef = useRef(null)
@@ -50,7 +52,12 @@ function Home() {
         socket.emit("join", { userType: "user", userId: user._id })
     }, [user])
 
-
+    
+    socket.on('ride-confirmed', ride => {
+        setVehicleFound(false)
+        setWaitingForDriver(true)
+        setRide(ride)
+    })
 
 
 
@@ -236,7 +243,11 @@ function Home() {
             </div>
 
             <div ref={waitingForDriverRef} className='fixed w-full z-10 bg-white bottom-0 translate-y-full py-6 px-3 pt-14'>
-                <WaitingForDriver waitingForDriver={waitingForDriver} />
+                <WaitingForDriver 
+                ride={ride}
+                setVehicleFound={setVehicleFound}
+                setWaitingForDriver={setWaitingForDriver}
+                waitingForDriver={waitingForDriver} />
             </div>
 
         </div>

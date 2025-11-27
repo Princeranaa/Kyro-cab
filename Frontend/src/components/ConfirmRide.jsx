@@ -1,8 +1,9 @@
-function ConfirmRide({ setVehiclePanleOpen, setConfirmRideVehicle, setVehicleFound, createRide, pickup, destination, vehicleType, fare }) {
+function ConfirmRide({  setConfirmRideVehicle, setVehicleFound, createRide, pickup, destination, vehicleType, fare }) {
     return (
         <div>
             < h5 onClick={() => {
                 setConfirmRideVehicle(false)
+               
             }} className='p-3 text-center w-[93%] absolute top-0' > <i className="text-3xl text-gray-600 ri-arrow-down-wide-line"></i></h5 >
             <h3 className='text-2xl font-semibold mb-5'>Confirm your ride</h3>
 
