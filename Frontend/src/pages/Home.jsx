@@ -46,6 +46,7 @@ function Home() {
     const { socket } = useContext(SocketContext)
 
     useEffect(() => {
+        if (!user?._id) return;
         socket.emit("join", { userType: "user", userId: user._id })
     }, [user])
 

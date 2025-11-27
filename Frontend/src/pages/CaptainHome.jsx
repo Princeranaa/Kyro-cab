@@ -26,6 +26,7 @@ function CaptainHome() {
 
 
     useEffect(()=>{
+         if (!captain?._id) return;
         socket.emit("join", { userType: "captain", userId: captain._id })
     },[captain])
 

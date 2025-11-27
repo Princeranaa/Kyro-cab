@@ -40,7 +40,7 @@ exports.registerCaptian = async (req, res) => {
         res.status(201).json({
             message: "Captain registered successfully",
             captain: {
-                id: newCaptain._id,
+                _id: newCaptain._id,
                 fullname: newCaptain.fullname,
                 email: newCaptain.email,
                 vehicle: newCaptain.vehicle,
@@ -75,7 +75,7 @@ exports.loginCaptian = async (req, res) => {
     res.status(200).json({
         message: "Login successful",
         captain: {
-            id: captain._id,
+            _id: captain._id,
             fullname: captain.fullname,
             email: captain.email,
             vehicle: captain.vehicle,
