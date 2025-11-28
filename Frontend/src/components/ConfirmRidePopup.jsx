@@ -1,17 +1,35 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import axios from "axios"
 
-function ConfirmRidePopup({ setConfirmRidePopupPanle }) {
+
+function ConfirmRidePopup({ ride, setConfirmRidePopupPanle, setRidePopupPanle }) {
 
 
     const [otp, setOtp] = useState("")
 
-    const handleSubmit = (e) => {
+    const navigate = useNavigate()
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
+
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/start-ride`, {
+            params: {
+                rideId: ride._id,
+                otp: Number(otp)
+            },
+            withCredentials: true
+        })
+
+        if (response.status === 200) {
+            setConfirmRidePopupPanle(false)
+            setRidePopupPanle(false)
+            navigate('/captain-riding', { state: { ride} })
+        }
+
+
         console.log("hello")
     }
-
-
 
 
     return (
@@ -22,7 +40,7 @@ function ConfirmRidePopup({ setConfirmRidePopupPanle }) {
             <div className="flex items-center justify-between p-3 bg-gray-400 rounded-xl mt-4">
                 <div className="flex items-center gap-3 ">
                     <img className='h-15 w-15 object-cover rounded-full ' src="https://images.unsplash.com/photo-1597586124394-fbd6ef244026?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
-                    <h2 className="text-lg font-medium">Prince rana</h2>
+                    <h2 className="text-lg font-medium">{ride?.fullname?.firstname || "prince rana"}</h2>
                 </div>
                 <h5 className="font-semibold text-lg">2.2 KM</h5>
             </div>
@@ -33,7 +51,7 @@ function ConfirmRidePopup({ setConfirmRidePopupPanle }) {
                         <i className="ri-user-location-line"></i>
                         <div>
                             <h3 className="text-lg font-medium">562/11-A</h3>
-                            <p className="text-sm -mt-1 text-gray-500">Kankirya talav ahmedabad</p>
+                            <p className="text-sm -mt-1 text-gray-500">{ride?.pickup}</p>
                         </div>
                     </div>
 
@@ -41,14 +59,14 @@ function ConfirmRidePopup({ setConfirmRidePopupPanle }) {
                         <i className="text-lg ri-map-pin-fill"></i>
                         <div>
                             <h3 className="text-lg font-medium">562/11-A</h3>
-                            <p className="text-sm -mt-1 text-gray-500">Kankirya talav ahmedabad</p>
+                            <p className="text-sm -mt-1 text-gray-500">{ride?.destination}</p>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-5 p-2 ">
                         <i className="ri-currency-line"></i>
                         <div>
-                            <h3 className="text-lg font-medium">₹ 199.0</h3>
+                            <h3 className="text-lg font-medium">₹ {ride?.fare}</h3>
                             <p className="text-sm -mt-1 text-gray-500">Cash</p>
                         </div>
                     </div>
@@ -78,16 +96,19 @@ function ConfirmRidePopup({ setConfirmRidePopupPanle }) {
                         />
 
                         {/* Confirm Ride */}
-                        <Link
-                            to="/captain-riding"
+                        <button
+                            // to="/captain-riding"
                             className="w-full flex justify-center bg-green-600 p-3 text-lg text-white font-semibold rounded-lg"
                         >
                             Confirm Ride
-                        </Link>
+                        </button>
 
                         {/* Cancel */}
                         <button
-                            onClick={() => setConfirmRidePopupPanle(false)}
+                            onClick={() => {
+                                setConfirmRidePopupPanle(false)
+                                setRidePopupPanle(false)
+                            }}
                             type="button"
                             className="w-full bg-gray-300 p-3 text-zinc-800 font-semibold rounded-lg"
                         >

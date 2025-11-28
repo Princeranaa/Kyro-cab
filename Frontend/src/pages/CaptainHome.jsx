@@ -51,14 +51,22 @@ function CaptainHome() {
     const locationInterval = setInterval(updateLocation, 10000);
     //  return () => clearInterval(locationInterval)
     updateLocation();
+
+    const handleNewRide = (data) => {
+      console.log("NEW RIDE RECEIVED:", data);
+      setRide(data);
+      setRidePopupPanle(true);
+    };
+
+    socket.on("new-ride", handleNewRide);
   }, [captain]);
 
-  socket.on("new-ride", (data) => {
+  /* socket.on("new-ride", (data) => {
     console.log("new-ride received:", data);
     setRide(data);
     setRidePopupPanle(true);
     console.log("new-ride data:", data);
-  });
+  }); */
 
   async function confirmRide() {
     try {
@@ -81,9 +89,16 @@ function CaptainHome() {
     }
   }
 
+  /*   useGSAP(() => {
+      gsap.to(ridePopupPanleRef.current, {
+        transform: ridePopupPanle ? "translate(0)" : "translateY(100%)",
+      });
+    }, [ridePopupPanle]); */
+
   useGSAP(() => {
     gsap.to(ridePopupPanleRef.current, {
-      transform: ridePopupPanle ? "translate(0)" : "translateY(100%)",
+      y: ridePopupPanle ? 0 : "100%",
+      duration: 0.4,
     });
   }, [ridePopupPanle]);
 
@@ -134,6 +149,7 @@ function CaptainHome() {
         className="fixed w-full h-screen z-10 bg-white bottom-0 translate-y-full py-10 px-3 pt-12"
       >
         <ConfirmRidePopup
+          ride={ride}
           setConfirmRidePopupPanle={setConfirmRidePopupPanle}
           setRidePopupPanle={setRidePopupPanle}
         />

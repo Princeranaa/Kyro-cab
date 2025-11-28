@@ -44,7 +44,7 @@ exports.createRide = async (req, res) => {
     })
   );
 
-  /*  console.log(
+   console.log(
     "captainsInRadius: ",
     captainsInRadius.map((captain) => ({
       _id: captain._id,
@@ -55,7 +55,7 @@ exports.createRide = async (req, res) => {
       location: captain.location,
       rating: captain.rating || 5,
     }))
-  ); */
+  );
 
   /* 
   // Remove sensitive data before sending to client
@@ -113,6 +113,26 @@ exports.confirmRide = async (req, res) => {
     } catch (err) {
 
         console.log(err);
+        return res.status(500).json({ message: err.message });
+    }
+}
+
+exports.startRide = async (req, res) => {
+
+    const { rideId, otp } = req.query;
+
+    try {
+        const ride = await rideService.startRide({ rideId, otp, captain: req.captain });
+
+        console.log(ride);
+
+        sendMessageToSocketId(ride.user.socketId, {
+            event: 'ride-started',
+            data: ride
+        })
+
+        return res.status(200).json(ride);
+    } catch (err) {
         return res.status(500).json({ message: err.message });
     }
 }

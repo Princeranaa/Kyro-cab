@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import kyroImg from '../assets/image3.png';
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -10,6 +10,9 @@ function CaptainRiding() {
 
     const [finishPanle, setFinishPanle] = useState(false)
     const finishPanleRef = useRef(null)
+    const location = useLocation();
+    const rideData = location.state?.ride;
+    console.log("rideDataaaaaaaa", rideData)
 
 
     useGSAP(() => {
@@ -35,9 +38,9 @@ function CaptainRiding() {
                 <img className='h-full w-full object-cover' src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif" alt="" />
             </div>
 
-            <div 
-            onClick={()=>{setFinishPanle(true)}}
-            className="h-1/5 p-6 flex justify-between items-center bg-yellow-400 relative">
+            <div
+                onClick={() => { setFinishPanle(true) }}
+                className="h-1/5 p-6 flex justify-between items-center bg-yellow-400 relative">
                 <h5 onClick={() => { }} className='p-3 text-center w-[95%] absolute top-0' >
                     <i className="text-3xl text-gray-600 ri-arrow-down-wide-line"></i>
                 </h5 >
@@ -46,7 +49,9 @@ function CaptainRiding() {
             </div>
 
             <div ref={finishPanleRef} className='fixed w-full z-10 bg-white bottom-0 translate-y-full py-10 px-3 pt-12'>
-                <FinishRide setFinishPanle={setFinishPanle} />
+                <FinishRide
+                    ride={rideData}
+                    setFinishPanle={setFinishPanle} />
             </div>
 
 

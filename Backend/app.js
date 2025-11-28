@@ -10,7 +10,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5174",
-      "https://nz8j4s2p-5174.inc1.devtunnels.ms",
+      "https://nz8j4s2p-5174.inc1.devtunnels.ms"
     ],
 
     credentials: true,

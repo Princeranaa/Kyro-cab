@@ -1,6 +1,11 @@
-import {Link} from "react-router-dom"
+import {Link, useLocation} from "react-router-dom"
 
 function Riding() {
+
+    
+        const location = useLocation();
+        const ride = location?.state?.ride || null;
+
     return (
         <div className="h-screen">
             <Link to={"/home"} className="fixed h-10 w-5 right-2 top-2 bg-white flex items-center justify-center rounded-full">
